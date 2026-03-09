@@ -4,7 +4,7 @@
 
 **Build terminal apps in pure Ruby.**
 
-A reactive TUI framework inspired by [Bubbletea](https://github.com/charmbracelet/bubbletea)! Build terminal applications in pure Ruby!
+A reactive TUI framework inspired by [Bubbletea](https://github.com/charmbracelet/bubbletea)!
 
 [Website](https://chamomile-rb.github.io) · [API Docs](https://chamomile-rb.github.io/docs/chamomile/) · [Get Started](#get-started)
 
