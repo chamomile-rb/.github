@@ -4,7 +4,7 @@
 
 **Build terminal apps in pure Ruby.**
 
-A pure Ruby TUI framework for building rich, interactive terminal applications.
+An event-driven TUI framework with declarative callbacks, a composable View DSL, and zero runtime dependencies.
 
 [Website](https://chamomile-rb.github.io) · [API Docs](https://chamomile-rb.github.io/docs/chamomile/) · [Get Started](#get-started)
 
@@ -20,17 +20,17 @@ A pure Ruby TUI framework for building rich, interactive terminal applications.
 
 ### 🌼 [Chamomile](https://github.com/chamomile-rb/chamomile) — Core Framework
 
-The engine. An event-driven runtime with async commands, signal handling, diff rendering, mouse support, and full terminal control.
+The engine. Event-driven runtime with a View DSL, async commands, signal handling, diff rendering, mouse support, and full terminal control.
 
 ```ruby
 gem install chamomile
 ```
 
+- **View DSL** — `panel`, `text`, `list`, `table`, `status_bar`
 - **Declarative callbacks** — `on_key`, `on_mouse`, `on_tick`
 - **Thread pool commands** — async by default
 - **FPS-throttled diff renderer** — only redraws what changed
 - **Mouse, paste, focus, resize** events
-- **Cooperative cancellation & streaming**
 
 </td>
 <td width="50%" valign="top">
@@ -93,26 +93,37 @@ gem install lazyrails-tui
 
 ```ruby
 require "chamomile"
+require "flourish"
 
-class Hello
+class Counter
   include Chamomile::Application
 
-  on_key("q")    { quit }
-  on_key(:ctrl_c) { quit }
+  def initialize
+    @count = 0
+  end
+
+  on_key(:up, "k")   { @count += 1 }
+  on_key(:down, "j") { @count -= 1 }
+  on_key("r")        { @count = 0 }
+  on_key("q")        { quit }
 
   def view
-    "Hello from Chamomile!\n\nPress q to quit."
+    panel(title: "Counter", border: :rounded, color: "#7d56f4") do
+      text "Count: #{@count}", bold: true, color: "#7d56f4"
+      text ""
+      status_bar "↑/k increment · ↓/j decrement · r reset · q quit"
+    end
   end
 end
 
-Chamomile.run(Hello.new)
+Chamomile.run(Counter.new)
 ```
 
 <div align="center">
 
 ### How It Works
 
-**Application** → Your class is the app&ensp;·&ensp;**Events** → Declare callbacks or override update&ensp;·&ensp;**View** → Returns a string to render
+**Application** → Your class is the app&ensp;·&ensp;**Events** → Declare callbacks with `on_key`, `on_mouse`, `on_tick`&ensp;·&ensp;**View DSL** → Build layouts with `panel`, `text`, `list`, `table`
 
 Everything is a command. Async by default, composable by design.
 
