@@ -4,7 +4,7 @@
 
 **Build terminal apps in pure Ruby.**
 
-A reactive TUI framework inspired by [Bubbletea](https://github.com/charmbracelet/bubbletea)!
+A pure Ruby TUI framework for building rich, interactive terminal applications.
 
 [Website](https://chamomile-rb.github.io) · [API Docs](https://chamomile-rb.github.io/docs/chamomile/) · [Get Started](#get-started)
 
@@ -20,13 +20,13 @@ A reactive TUI framework inspired by [Bubbletea](https://github.com/charmbracele
 
 ### 🌼 [Chamomile](https://github.com/chamomile-rb/chamomile) — Core Framework
 
-The engine. An Elm Architecture event loop with async commands, signal handling, diff rendering, mouse support, and full terminal control.
+The engine. An event-driven runtime with async commands, signal handling, diff rendering, mouse support, and full terminal control.
 
 ```ruby
 gem install chamomile
 ```
 
-- **Model / Update / View** — your class is the app
+- **Declarative callbacks** — `on_key`, `on_mouse`, `on_tick`
 - **Thread pool commands** — async by default
 - **FPS-throttled diff renderer** — only redraws what changed
 - **Mouse, paste, focus, resize** events
@@ -37,7 +37,7 @@ gem install chamomile
 
 ### 🌸 [Petals](https://github.com/chamomile-rb/petals) — Components
 
-13 reusable TUI components that follow the same `update`/`view` protocol. Drop in and go.
+13 reusable TUI components that follow the same `handle`/`view` protocol. Drop in and go.
 
 ```ruby
 gem install petals
@@ -95,16 +95,10 @@ gem install lazyrails-tui
 require "chamomile"
 
 class Hello
-  include Chamomile::Model
-  include Chamomile::Commands
+  include Chamomile::Application
 
-  def update(msg)
-    case msg
-    when Chamomile::KeyMsg
-      return quit if msg.key == "q"
-    end
-    nil
-  end
+  on_key("q")    { quit }
+  on_key(:ctrl_c) { quit }
 
   def view
     "Hello from Chamomile!\n\nPress q to quit."
@@ -118,7 +112,7 @@ Chamomile.run(Hello.new)
 
 ### How It Works
 
-**Model** → Your class holds state&ensp;·&ensp;**Update** → Receives messages, returns commands&ensp;·&ensp;**View** → Returns a string to render
+**Application** → Your class is the app&ensp;·&ensp;**Events** → Declare callbacks or override update&ensp;·&ensp;**View** → Returns a string to render
 
 Everything is a command. Async by default, composable by design.
 
