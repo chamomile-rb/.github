@@ -4,7 +4,7 @@
 
 **Build terminal apps in pure Ruby.**
 
-An event-driven TUI framework with declarative callbacks, a composable View DSL, and zero runtime dependencies.
+An event-driven TUI framework with declarative callbacks, a composable View DSL, terminal styling, reusable components, and zero runtime dependencies.
 
 [Website](https://chamomile-rb.github.io) · [API Docs](https://chamomile-rb.github.io/docs/chamomile/) · [Get Started](#get-started)
 
@@ -12,60 +12,30 @@ An event-driven TUI framework with declarative callbacks, a composable View DSL,
 
 ---
 
-## The Ecosystem
+## What's Inside
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🌼 [Chamomile](https://github.com/chamomile-rb/chamomile) — Core Framework
+### 🌼 [Chamomile](https://github.com/chamomile-rb/chamomile) — The Complete Ruby TUI Framework
 
-The engine. Event-driven runtime with a View DSL, async commands, signal handling, diff rendering, mouse support, and full terminal control.
+One gem. Everything you need for terminal UIs in Ruby.
 
 ```ruby
 gem install chamomile
 ```
 
+**Core Runtime**
 - **View DSL** — `panel`, `text`, `list`, `table`, `status_bar`
 - **Declarative callbacks** — `on_key`, `on_mouse`, `on_tick`
 - **Thread pool commands** — async by default
 - **FPS-throttled diff renderer** — only redraws what changed
 - **Mouse, paste, focus, resize** events
 
-</td>
-<td width="50%" valign="top">
+**Styling** — CSS-like box model with true color, 10 border presets, padding, margin, alignment, horizontal/vertical layout composition
 
-### 🌸 [Petals](https://github.com/chamomile-rb/petals) — Components
-
-13 reusable TUI components that follow the same `handle`/`view` protocol. Drop in and go.
-
-```ruby
-gem install petals
-```
-
-- **TextInput** & **TextArea** — full editing, paste, echo modes
-- **Viewport** — scrollable content with keyboard & mouse
-- **Table** & **List** — data display with filtering & pagination
-- **Spinner**, **Progress**, **Timer**, **Stopwatch**
-- **FilePicker**, **Paginator**, **Cursor**, **Help**
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### 🎨 [Flourish](https://github.com/chamomile-rb/flourish) — Styling
-
-CSS-like box model for the terminal. Colors, borders, padding, alignment, and layout composition. Zero dependencies.
-
-```ruby
-gem install flourish
-```
-
-- **True color**, ANSI 256, basic ANSI
-- **10 border presets** with per-side colors
-- **Padding, margin, width, alignment**
-- **Horizontal/vertical join & place**
+**Components** — 13 reusable TUI components: TextInput, TextArea, Viewport, Table, List, FilePicker, Spinner, Progress, Timer, Stopwatch, Paginator, Cursor, Help
 
 </td>
 <td width="50%" valign="top">
@@ -93,7 +63,6 @@ gem install lazyrails-tui
 
 ```ruby
 require "chamomile"
-require "flourish"
 
 class Counter
   include Chamomile::Application
