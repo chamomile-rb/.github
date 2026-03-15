@@ -98,6 +98,8 @@ Everything is a command. Async by default, composable by design.
 
 ---
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/omgjack)
+
 <sub>MIT License</sub>
 
 </div>
